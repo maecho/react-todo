@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import {
   Container,
   Button,
-  Header,
   Grid,
   Divider,
   Input,
@@ -13,7 +10,6 @@ import {
 
 // Components
 import TodoList from './components/TodoList.jsx';
-// import TodoAddInput from './components/TodoAddInput.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +31,16 @@ class App extends Component {
       text: ''
     }))
   }
+  handleDelete = (targetTodo) => {
+    let todo = this.state.tasks;
+    todo.map((v, i) => {
+      if(v === targetTodo){ todo.splice(i, 1) }
+      return v
+    })
+    this.setState({
+      tasks: todo,
+    })
+  }
   render() {
     return (
       <Container>
@@ -44,6 +50,7 @@ class App extends Component {
             <Container textAlign='center'>
               <TodoList
                 tasks={this.state.tasks}
+                delete={this.handleDelete}
               />
             </Container>
           </Grid.Row>

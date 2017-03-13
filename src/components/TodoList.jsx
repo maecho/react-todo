@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
 import {
-  Container,
-  Button,
-  Checkbox,
-  Card,
   List,
+  Button,
 } from 'semantic-ui-react'
 
-const TodoList = (props) => {
+class TodoList extends Component {
+  Delete = (event, value) => {
+    this.props.delete(value.target);
+  }
+  render() {
     return (
-      <List relaxed animated>
-        {props.tasks.map((task) => {
+      <List relaxed>
+        {this.props.tasks.map((task) => {
           return(
             <List.Item
               key={task}
             >
               <List.Content>
-                <List.Header>{task}</List.Header>
+                <List.Header>
+                <Button
+                  target={task}
+                  animated='vertical'
+                  onClick={this.Delete}
+                >
+                  <Button.Content visible>{task}</Button.Content>
+                  <Button.Content hidden>
+                    Clear!
+                  </Button.Content>
+                </Button>
+                </List.Header>
               </List.Content>
             </List.Item>
           )
@@ -24,9 +36,11 @@ const TodoList = (props) => {
       </List>
     )
   }
+}
 
 TodoList.propTypes = {
   tasks: React.PropTypes.array,
+  delete: React.PropTypes.func,
 }
 
 export default TodoList;
