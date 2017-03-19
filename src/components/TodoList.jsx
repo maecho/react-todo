@@ -1,46 +1,82 @@
 import React, { Component } from 'react';
 import {
-  List,
-  Button,
+  Table,
+  Header,
+  Checkbox,
 } from 'semantic-ui-react'
+
+// Modal
+import UpdateDialog from './UpdateDialog'
+import DeleteDialog from './DeleteDialog'
+
 
 class TodoList extends Component {
   Delete = (event, value) => {
-    this.props.delete(value.target);
+    const task = value.target ? value.target : value.id;
+    this.props.Delete(task);
+  }
+  Update = (target, change) => {
+    this.props.Update(target, change);
+  }
+  Check = (event, value) => {
+    const taskId = value.value;
+    this.props.Check(taskId);
   }
   render() {
     return (
-      <List relaxed>
-        {this.props.tasks.map((task) => {
-          return(
-            <List.Item
-              key={task}
-            >
-              <List.Content>
-                <List.Header>
-                <Button
-                  target={task}
-                  animated='vertical'
-                  onClick={this.Delete}
+        <Table
+          basic='very'
+        >
+          <Table.Body>
+            {this.props.tasks.map((task) => {
+              return(
+                <Table.Row
+                  key={task.id}
                 >
-                  <Button.Content visible>{task}</Button.Content>
-                  <Button.Content hidden>
-                    Clear!
-                  </Button.Content>
-                </Button>
-                </List.Header>
-              </List.Content>
-            </List.Item>
-          )
-        })}
-      </List>
+                  <Table.Cell
+                    collapsing
+                  >
+                    <Checkbox
+                      slider
+                      value={(task.id).toString()}
+                      onChange={this.Check}
+                    />
+                  </Table.Cell>
+                  <Table.Cell
+                    textAlign='right'
+                  >
+                    <Header as='h2'
+                      disabled={task.condition ? true : false}
+                    >
+                      {task.value}
+                    </Header>
+                  </Table.Cell>
+                  <Table.Cell
+                    textAlign='right'
+                  >
+                    <UpdateDialog
+                      task={task}
+                      Update={this.Update}
+                    />
+                    <DeleteDialog
+                      task={task}
+                      Delete={this.Delete}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
+            </Table.Body>
+          </Table>
     )
   }
 }
 
 TodoList.propTypes = {
   tasks: React.PropTypes.array,
-  delete: React.PropTypes.func,
+  Delete: React.PropTypes.func,
+  Check: React.PropTypes.func,
+  Update: React.PropTypes.func,
 }
 
 export default TodoList;
