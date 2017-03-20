@@ -5,7 +5,6 @@ import {
   Grid,
   Divider,
   Input,
-  Icon,
 } from 'semantic-ui-react'
 
 // Components
@@ -15,12 +14,20 @@ import {
   EditApi,
   ReadApi,
 } from './../utils/todoApi'
+import {
+  setLocal,
+  getLocal
+} from './../utils/WebStorage'
 
 class App extends Component {
   constructor(props) {
     super(props);
+    let task = []
+    if(getLocal()){
+      task = getLocal()
+    }
     this.state = {
-      tasks: [],
+      tasks: task,
       text: ''
     }
   }
@@ -37,10 +44,9 @@ class App extends Component {
     }
     event.preventDefault();
     this.setState((prevState) => ({
-      tasks: prevState.tasks.concat(this.makeTasks(this.state.text)),
+      tasks: this.addTasksRegist(prevState.tasks.concat(this.makeTasks(this.state.text))),
       text: ''
     }))
-    // EditApi('POST', this.state.tasks);
   }
   // 整形
   makeTasks = (taskName) => {
@@ -51,6 +57,12 @@ class App extends Component {
     }
     return task
   }
+  // 力技
+  addTasksRegist(prev){
+    setLocal(prev)
+    //EditApi('POST', prev);
+    return prev
+  }
   // 削除
   handleDelete = (targetTodo) => {
     let todo = this.state.tasks;
@@ -58,10 +70,7 @@ class App extends Component {
       if(v.id === targetTodo){ todo.splice(i, 1) }
       return v.id
     })
-    this.setState({
-      tasks: todo,
-    })
-    // EditApi('POST', this.state.tasks);
+    this.UpdateState(todo)
   }
   // 更新
   handleUpdate = (targetTodo, changeTodo) => {
@@ -72,10 +81,7 @@ class App extends Component {
       }
       return v.id
     })
-    this.setState({
-      tasks: todo,
-    })
-    // EditApi('POST', this.state.tasks);
+    this.UpdateState(todo)
   }
   // 完了 <=> 未完了
   handleCheck = (targetTodo) => {
@@ -86,10 +92,15 @@ class App extends Component {
       }
       return v.id
     })
+    this.UpdateState(todo)
+  }
+  // ステート更新
+  UpdateState = (value) => {
     this.setState({
-      tasks: todo,
+      tasks: value,
     })
-    // EditApi('POST', this.state.tasks);
+    setLocal(value)
+    //EditApi('POST', value);
   }
   render() {
     return (
