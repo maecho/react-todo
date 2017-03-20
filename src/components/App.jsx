@@ -10,6 +10,11 @@ import {
 
 // Components
 import TodoList from './TodoList.jsx';
+// Functions
+import {
+  EditApi,
+  ReadApi,
+} from './../utils/todoApi'
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +40,7 @@ class App extends Component {
       tasks: prevState.tasks.concat(this.makeTasks(this.state.text)),
       text: ''
     }))
+    // EditApi('POST', this.state.tasks);
   }
   // 整形
   makeTasks = (taskName) => {
@@ -55,6 +61,7 @@ class App extends Component {
     this.setState({
       tasks: todo,
     })
+    // EditApi('POST', this.state.tasks);
   }
   // 更新
   handleUpdate = (targetTodo, changeTodo) => {
@@ -68,6 +75,7 @@ class App extends Component {
     this.setState({
       tasks: todo,
     })
+    // EditApi('POST', this.state.tasks);
   }
   // 完了 <=> 未完了
   handleCheck = (targetTodo) => {
@@ -81,6 +89,7 @@ class App extends Component {
     this.setState({
       tasks: todo,
     })
+    // EditApi('POST', this.state.tasks);
   }
   render() {
     return (
@@ -94,21 +103,27 @@ class App extends Component {
           <Grid.Row>
               <Divider horizontal>Add</Divider>
               <Container textAlign='center'>
-                <Input
-                  placeholder='Input Task'
-                  onChange={this.handleChange}
-                  value={this.state.text}
-                />
-                <Button
-                  primary
-                  animated='vertical'
-                  onClick={this.AddTasks}
-                >
-                  <Button.Content visible>Add</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name='right arrow' />
-                  </Button.Content>
-                </Button>
+                <Grid columns='equal'>
+                  <Grid.Column>
+                    {null}
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    <Input
+                      fluid
+                      placeholder='Input Task'
+                      onChange={this.handleChange}
+                      value={this.state.text}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Button
+                      primary
+                      onClick={this.AddTasks}
+                    >
+                      タスク追加
+                    </Button>
+                  </Grid.Column>
+                </Grid>
               </Container>
           </Grid.Row>
           <Grid.Row>
