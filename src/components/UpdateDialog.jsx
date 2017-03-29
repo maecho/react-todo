@@ -35,8 +35,9 @@ class UpdateDialog extends Component {
       <Modal
         trigger={
           <Button
-            color='blue'
+            color='green'
             onClick={this.ModalOpen}
+            disabled={this.props.task.condition ? true : false}
           >
             更新
           </Button>
@@ -51,7 +52,6 @@ class UpdateDialog extends Component {
         <Modal.Content>
           <Input
             fluid
-            icon='tasks'
             value={this.state.text}
             onChange={this.change}
           />
@@ -63,7 +63,7 @@ class UpdateDialog extends Component {
             <Icon name='remove' /> キャンセル
           </Button>
           <Button
-            color='blue'
+            color='green'
             onClick={this.Update}
           >
             <Icon name='checkmark' /> 更新

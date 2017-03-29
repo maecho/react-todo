@@ -34,25 +34,29 @@ class TodoList extends Component {
                   key={task.id}
                 >
                   <Table.Cell
-                    collapsing
+                    width={3}
+                    textAlign='right'
                   >
                     <Checkbox
-                      slider
+                      checked={task.condition}
                       value={(task.id).toString()}
                       onChange={this.Check}
                     />
                   </Table.Cell>
                   <Table.Cell
-                    textAlign='right'
+                    width={6}
+                    textAlign='center'
                   >
                     <Header as='h2'
                       disabled={task.condition ? true : false}
+                      className={task.condition ? 'lineThrough' : ''}
                     >
                       {task.value}
                     </Header>
                   </Table.Cell>
                   <Table.Cell
-                    textAlign='right'
+                    width={3}
+                    textAlign='left'
                   >
                     <UpdateDialog
                       task={task}
