@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Button,
   Header,
@@ -9,45 +9,49 @@ import {
 
 class UpdateDialog extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       open: false,
       text: this.props.task.value,
     }
+    this.ModalOpen = this.ModalOpen.bind(this)
+    this.close = this.close.bind(this)
+    this.change = this.change.bind(this)
+    this.Update = this.Update.bind(this)
   }
-  ModalOpen = () => {
+  ModalOpen() {
     this.setState({ open: true })
   }
-  close = () => {
+  close() {
     this.setState({ open: false })
   }
-  change = (event, value) => {
+  change(event, value) {
     this.setState({
-      text: value.value
-    });
+      text: value.value,
+    })
   }
-  Update = () => {
+  Update() {
     this.props.Update(this.props.task.id, this.state.text)
     this.close()
   }
-  render(){
+  render() {
     return (
       <Modal
         trigger={
           <Button
-            color='green'
+            color="green"
             onClick={this.ModalOpen}
-            disabled={this.props.task.condition ? true : false}
+            disabled={this.props.task.condition}
           >
             更新
           </Button>
         }
-        size='small'
+        size="small"
         open={this.state.open}
-        >
+      >
         <Header
-          icon='tasks'
-          content='タスク更新'
+          icon="tasks"
+          content="タスク更新"
         />
         <Modal.Content>
           <Input
@@ -60,13 +64,13 @@ class UpdateDialog extends Component {
           <Button
             onClick={this.close}
           >
-            <Icon name='remove' /> キャンセル
+            <Icon name="remove" /> キャンセル
           </Button>
           <Button
-            color='green'
+            color="green"
             onClick={this.Update}
           >
-            <Icon name='checkmark' /> 更新
+            <Icon name="checkmark" /> 更新
           </Button>
         </Modal.Actions>
       </Modal>
@@ -76,7 +80,6 @@ class UpdateDialog extends Component {
 
 UpdateDialog.propTypes = {
   task: React.PropTypes.object,
-  Delete: React.PropTypes.func,
   Update: React.PropTypes.func,
 }
 

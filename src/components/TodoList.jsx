@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Table,
   Header,
@@ -11,67 +11,74 @@ import DeleteDialog from './DeleteDialog'
 
 
 class TodoList extends Component {
-  Delete = (event, value) => {
-    const task = value.target ? value.target : value.id;
-    this.props.Delete(task);
+  constructor(props) {
+    super(props)
+    this.Delete = this.Delete.bind(this)
+    this.Update = this.Update.bind(this)
+    this.Check = this.Check.bind(this)
   }
-  Update = (target, change) => {
-    this.props.Update(target, change);
+  Delete(event, value) {
+    const task = value.target ? value.target : value.id
+    this.props.Delete(task)
   }
-  Check = (event, value) => {
-    const taskId = value.value;
-    this.props.Check(taskId);
+  Update(target, change) {
+    this.props.Update(target, change)
+  }
+  Check(event, value) {
+    const taskId = value.value
+    this.props.Check(taskId)
   }
   render() {
     return (
-        <Table
-          basic='very'
-        >
-          <Table.Body>
-            {this.props.tasks.map((task) => {
-              return(
-                <Table.Row
-                  key={task.id}
+      <Table
+        basic="very"
+      >
+        <Table.Body>
+          {this.props.tasks.map((task) => {
+            return (
+              <Table.Row
+                key={task.id}
+              >
+                <Table.Cell
+                  width={3}
+                  textAlign="right"
                 >
-                  <Table.Cell
-                    width={3}
-                    textAlign='right'
+                  <Checkbox
+                    checked={task.condition}
+                    value={(task.id).toString()}
+                    onChange={this.Check}
+                  />
+                </Table.Cell>
+                <Table.Cell
+                  width={6}
+                  textAlign="center"
+                >
+                  <Header
+                    as="h2"
+                    disabled={task.condition}
+                    className={task.condition ? 'lineThrough' : ''}
                   >
-                    <Checkbox
-                      checked={task.condition}
-                      value={(task.id).toString()}
-                      onChange={this.Check}
-                    />
-                  </Table.Cell>
-                  <Table.Cell
-                    width={6}
-                    textAlign='center'
-                  >
-                    <Header as='h2'
-                      disabled={task.condition ? true : false}
-                      className={task.condition ? 'lineThrough' : ''}
-                    >
-                      {task.value}
-                    </Header>
-                  </Table.Cell>
-                  <Table.Cell
-                    width={3}
-                    textAlign='left'
-                  >
-                    <UpdateDialog
-                      task={task}
-                      Update={this.Update}
-                    />
-                    <DeleteDialog
-                      task={task}
-                      Delete={this.Delete}
-                    />
-                  </Table.Cell>
-                </Table.Row>
-              )
-            })}
-            </Table.Body>
-          </Table>
+                    {task.value}
+                  </Header>
+                </Table.Cell>
+                <Table.Cell
+                  width={3}
+                  textAlign="left"
+                >
+                  <UpdateDialog
+                    task={task}
+                    Update={this.Update}
+                  />
+                  <DeleteDialog
+                    task={task}
+                    Delete={this.Delete}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            )
+          })}
+        </Table.Body>
+      </Table>
     )
   }
 }
@@ -83,4 +90,4 @@ TodoList.propTypes = {
   Update: React.PropTypes.func,
 }
 
-export default TodoList;
+export default TodoList
