@@ -5,6 +5,7 @@ import {
   Grid,
   Divider,
   Input,
+  Menu,
 } from 'semantic-ui-react'
 
 // Components
@@ -112,52 +113,63 @@ class App extends Component {
   }
   render() {
     return (
-      <Container>
-        <Grid container>
-          <Grid.Row>
-            <Grid.Column>
-              {null}
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Divider horizontal>Add</Divider>
-            <Container textAlign="center">
-              <Grid columns="equal">
-                <Grid.Column>
-                  {null}
-                </Grid.Column>
-                <Grid.Column width={8}>
-                  <Input
-                    fluid
-                    placeholder="Input Task"
-                    onChange={this.handleChange}
-                    value={this.state.text}
-                  />
-                </Grid.Column>
-                <Grid.Column>
-                  <Button
-                    primary
-                    onClick={this.AddTasks}
-                  >
-                    タスク追加
-                  </Button>
-                </Grid.Column>
-              </Grid>
-            </Container>
-          </Grid.Row>
-          <Grid.Row>
-            <Divider horizontal>TaskList</Divider>
-            <Container textAlign="center">
-              <TodoList
-                tasks={this.state.tasks}
-                Delete={this.handleDelete}
-                Check={this.handleCheck}
-                Update={this.handleUpdate}
-              />
-            </Container>
-          </Grid.Row>
-        </Grid>
-      </Container>
+      <div>
+        <Menu
+          attached
+        >
+          <Menu.Item
+            as="h3"
+          >
+            React-Todo
+          </Menu.Item>
+        </Menu>
+        <Container>
+          <Grid container>
+            <Grid.Row>
+              <Grid.Column>
+                {null}
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Divider horizontal>Add</Divider>
+              <Container textAlign="center">
+                <Grid columns="equal">
+                  <Grid.Column>
+                    {null}
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    <Input
+                      fluid
+                      placeholder="Input Task"
+                      onChange={this.handleChange}
+                      value={this.state.text}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Button
+                      primary
+                      onClick={this.AddTasks}
+                    >
+                      タスク追加
+                    </Button>
+                  </Grid.Column>
+                </Grid>
+              </Container>
+            </Grid.Row>
+            <Grid.Row>
+              <Divider horizontal>TaskList</Divider>
+              <Container textAlign="center">
+                <TodoList
+                  tasks={this.state.tasks}
+                  Delete={this.handleDelete}
+                  Check={this.handleCheck}
+                  Update={this.handleUpdate}
+                />
+              </Container>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
     )
   }
 }

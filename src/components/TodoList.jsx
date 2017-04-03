@@ -25,7 +25,10 @@ class TodoList extends Component {
     this.props.Update(target, change)
   }
   Check(event, value) {
-    const taskId = value.value
+    let taskId = value.value
+    if (event.currentTarget.getAttribute('data-number')) {
+      taskId = event.currentTarget.getAttribute('data-number')
+    }
     this.props.Check(taskId)
   }
   render() {
@@ -55,6 +58,11 @@ class TodoList extends Component {
                 >
                   <Header
                     as="h2"
+                    data-number={(task.id).toString()}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                    onClick={this.Check}
                     disabled={task.condition}
                     className={task.condition ? 'lineThrough' : ''}
                   >
