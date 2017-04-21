@@ -14,13 +14,9 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.(scss|css)$/,
-        loader: 'style-loader!css-loader?minimize',
-      },
-      {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
-        exclude: /node_moduels/,
+        exclude: /node_modules/,
         query: {
           presets: [
             'es2015',
@@ -28,11 +24,6 @@ const config = {
           ],
         },
       },
-      { test: /\.svg$/, loader: 'url-loader?mimetype=image/svg+xml' },
-      { test: /\.woff$/, loader: 'url-loader?mimetype=application/font-woff' },
-      { test: /\.woff2$/, loader: 'url-loader?mimetype=application/font-woff' },
-      { test: /\.eot$/, loader: 'url-loader?mimetype=application/font-woff' },
-      { test: /\.ttf$/, loader: 'url-loader?mimetype=application/font-woff' },
     ],
   },
   resolve: {
