@@ -13,6 +13,9 @@ import App from './containers/App'
 // Reducer
 import reducer from './reducers/reducer'
 
+// style
+import './index.css'
+
 const store = createStore(reducer)
 
 ReactDOM.render(
