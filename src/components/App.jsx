@@ -23,12 +23,10 @@ import {
 class App extends Component {
   constructor(props) {
     super(props)
-    let task = []
     if (getLocal()) {
-      task = getLocal()
+      this.UpdateState(getLocal())
     }
     this.state = {
-      tasks: task,
       text: '',
     }
     this.handleChange = this.handleChange.bind(this)
@@ -47,15 +45,14 @@ class App extends Component {
     })
   }
   // タスクの追加
-  AddTasks(event) {
+  AddTasks() {
     if (!(this.state.text)) {
       return
     }
-    event.preventDefault()
-    this.setState(prevState => ({
-      tasks: this.addTasksRegist(prevState.tasks.concat(this.makeTasks(this.state.text))),
+    this.props.handleTodoAdd(this.makeTasks(this.state.text))
+    this.setState({
       text: '',
-    }))
+    })
   }
   // 整形
   makeTasks(taskName) {
@@ -74,7 +71,7 @@ class App extends Component {
   }
   // 削除
   handleDelete(targetTodo) {
-    const todo = this.state.tasks
+    const todo = (this.props.tasks).concat()
     todo.map((v, i) => {
       if (v.id === targetTodo) { todo.splice(i, 1) }
       return v.id
@@ -83,7 +80,7 @@ class App extends Component {
   }
   // 更新
   handleUpdate(targetTodo, changeTodo) {
-    const todo = this.state.tasks
+    const todo = (this.props.tasks).concat()
     todo.map((v, i) => {
       if (v.id === targetTodo) {
         todo[i].value = changeTodo
@@ -94,7 +91,7 @@ class App extends Component {
   }
   // 完了 <=> 未完了
   handleCheck(targetTodo) {
-    const todo = this.state.tasks
+    const todo = (this.props.tasks).concat()
     todo.map((v, i) => {
       if ((v.id).toString() === targetTodo) {
         todo[i].condition = !(todo[i].condition)
@@ -105,11 +102,8 @@ class App extends Component {
   }
   // ステート更新
   UpdateState(value) {
-    this.setState({
-      tasks: value,
-    })
+    this.props.handleUpdAdd(value)
     setLocal(value)
-    // EditApi('POST', value)
   }
   render() {
     return (
@@ -160,7 +154,7 @@ class App extends Component {
               <Divider horizontal>TaskList</Divider>
               <Container textAlign="center">
                 <TodoList
-                  tasks={this.state.tasks}
+                  tasks={this.props.tasks}
                   Delete={this.handleDelete}
                   Check={this.handleCheck}
                   Update={this.handleUpdate}
@@ -176,6 +170,8 @@ class App extends Component {
 
 App.propTypes = {
   tasks: React.PropTypes.array,
+  handleTodoAdd: React.PropTypes.func,
+  handleUpdAdd: React.PropTypes.func,
 }
 
 export default App

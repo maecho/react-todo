@@ -1,7 +1,7 @@
 /* LocalStorageコントローラ */
 
 // SET
-export const setLocal = item => {
+export const setLocal = (item) => {
   localStorage.setItem('TODO', JSON.stringify(item))
 }
 // GET
