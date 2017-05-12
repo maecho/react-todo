@@ -27,9 +27,16 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3"
   },
-  "main": "index.jsx",
+  "main": "./build/main/index.js",
+  "babel": {
+    "sourceMaps": "inline",
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "webpack-dev-server --hot --progress --colors --inline --port 4000 --content-base ./build/renderer",
     "build": "webpack --config webpack.config.js -p --color",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

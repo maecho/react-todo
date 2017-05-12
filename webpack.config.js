@@ -1,15 +1,13 @@
 const path = require('path')
-const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const config = {
   entry: {
-    app: path.resolve('src/index.js'),
+    'main/index': './src/MainProcess/index.js',
+    'renderer/bundle': './src/RenderProcess/index.js',
   },
   output: {
-    path: path.resolve('build'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    filename: 'build/[name].js',
   },
   module: {
     loaders: [
@@ -24,16 +22,25 @@ const config = {
           ],
         },
       },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+      },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
-  devtool: 'inline-source-map',
+  target: 'electron',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.resolve('public/index.html'),
+      template: './public/index.html',
+      filename: path.join(__dirname, 'build/renderer', 'index.html'),
+      inject: false,
     }),
   ],
 }
